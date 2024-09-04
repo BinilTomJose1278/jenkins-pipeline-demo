@@ -18,40 +18,20 @@ pipeline {
             }
             post {
                 success {
-                    script {
-                        echo "Attempting to send success email for Unit and Integration Tests..."
-                        try {
-                            emailext(
-                                to: 'biniltomjose12780@gmail.com',
-                                subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
-                                body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
-                                attachLog: true,
-                                debug: true
-                            )
-                            echo "Email sent successfully for Unit and Integration Tests"
-                        } catch (Exception e) {
-                            echo "Failed to send email for Unit and Integration Tests: ${e}"
-                        }
-                    }
-                    sleep time: 5, unit: 'SECONDS'  // Add a 5-second delay between emails
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
+                        body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
                 failure {
-                    script {
-                        echo "Attempting to send failure email for Unit and Integration Tests..."
-                        try {
-                            emailext(
-                                to: 'biniltomjose12780@gmail.com',
-                                subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
-                                body: "The Unit and Integration Tests stage has failed. Please find the logs attached.",
-                                attachLog: true,
-                                debug: true
-                            )
-                            echo "Failure email sent successfully for Unit and Integration Tests"
-                        } catch (Exception e) {
-                            echo "Failed to send failure email for Unit and Integration Tests: ${e}"
-                        }
-                    }
-                    sleep time: 5, unit: 'SECONDS'
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
+                        body: "The Unit and Integration Tests stage has failed. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -72,40 +52,20 @@ pipeline {
             }
             post {
                 success {
-                    script {
-                        echo "Attempting to send success email for Security Scan..."
-                        try {
-                            emailext(
-                                to: 'biniltomjose12780@gmail.com',
-                                subject: "Jenkins Pipeline: Security Scan - SUCCESS",
-                                body: "The Security Scan stage has completed successfully. Please find the logs attached.",
-                                attachLog: true,
-                                debug: true
-                            )
-                            echo "Email sent successfully for Security Scan"
-                        } catch (Exception e) {
-                            echo "Failed to send email for Security Scan: ${e}"
-                        }
-                    }
-                    sleep time: 5, unit: 'SECONDS'
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Security Scan - SUCCESS",
+                        body: "The Security Scan stage has completed successfully. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
                 failure {
-                    script {
-                        echo "Attempting to send failure email for Security Scan..."
-                        try {
-                            emailext(
-                                to: 'biniltomjose12780@gmail.com',
-                                subject: "Jenkins Pipeline: Security Scan - FAILURE",
-                                body: "The Security Scan stage has failed. Please find the logs attached.",
-                                attachLog: true,
-                                debug: true
-                            )
-                            echo "Failure email sent successfully for Security Scan"
-                        } catch (Exception e) {
-                            echo "Failed to send failure email for Security Scan: ${e}"
-                        }
-                    }
-                    sleep time: 5, unit: 'SECONDS'
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Security Scan - FAILURE",
+                        body: "The Security Scan stage has failed. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -137,13 +97,13 @@ pipeline {
 
     post {
         success {
-            echo "Sending global success email..."
             mail to: 'biniltomjose12780@gmail.com',
                  subject: "Jenkins Pipeline completed successfully",
                  body: "The entire pipeline has completed successfully."
+                 
+            
         }
         failure {
-            echo "Sending global failure email..."
             mail to: 'biniltomjose12780@gmail.com',
                  subject: "Jenkins Pipeline failed",
                  body: "The pipeline has encountered a failure."
