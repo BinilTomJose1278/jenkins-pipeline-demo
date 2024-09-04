@@ -48,10 +48,12 @@ pipeline {
 
     post {
         always {
-            mail to: "biniltomjose12780@gmail.com",
-                 subject: "Build and Test Pipeline - Status",
-                 body: "The pipeline has completed. Check the logs for details.",
-                 attachLog: true
+            script {
+                def logContent = currentBuild.rawBuild.getLog(50).join('\n') // Get last 50 lines of the log
+                mail to: "biniltomjose12780@gmail.com",
+                     subject: "Build and Test Pipeline - Status",
+                     body: "The pipeline has completed.\n\nLogs:\n${logContent}"
+            }
         }
         success {
             echo "Pipeline completed successfully."
