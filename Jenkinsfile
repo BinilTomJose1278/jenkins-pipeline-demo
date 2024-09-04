@@ -4,62 +4,92 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building the code using Maven..."
-                // Example: sh 'mvn clean package'
+                echo 'Stage 1: Build'
+                echo 'Task: Compile and package the code using a build automation tool.'
+                echo 'Tool: Maven'
             }
         }
+
         stage('Unit and Integration Tests') {
             steps {
-                echo "Running Unit and Integration Tests using JUnit..."
-                // Example: sh 'mvn test'
+                echo 'Stage 2: Unit and Integration Tests'
+                echo 'Task: Run unit tests to ensure code functions as expected, and integration tests to check if different components work together.'
+                echo 'Tools: JUnit for unit tests, Selenium for integration tests'
+            }
+            post {
+                always {
+                    script {
+                        def stageStatus = currentBuild.currentResult
+                        emailext(
+                            to: 'biniltomjose12780@gmail.com',
+                            subject: "Jenkins Pipeline: Unit and Integration Tests - ${stageStatus}",
+                            body: "The Unit and Integration Tests stage has completed with status: ${stageStatus}. Please find the logs attached.",
+                            attachLog: true
+                        )
+                    }
+                }
             }
         }
+
         stage('Code Analysis') {
             steps {
-                echo "Analyzing code quality using SonarQube..."
-                // Example: sh 'sonar-scanner'
+                echo 'Stage 3: Code Analysis'
+                echo 'Task: Analyze code quality to ensure it meets industry standards.'
+                echo 'Tool: SonarQube'
             }
         }
+
         stage('Security Scan') {
             steps {
-                echo "Performing security scan using OWASP Dependency-Check..."
-                // Example: sh 'dependency-check.sh --project myapp --scan .'
+                echo 'Stage 4: Security Scan'
+                echo 'Task: Perform a security scan to identify vulnerabilities in the code.'
+                echo 'Tool: OWASP Dependency-Check'
+            }
+            post {
+                always {
+                    script {
+                        def stageStatus = currentBuild.currentResult
+                        emailext(
+                            to: 'biniltomjose12780@gmail.com',
+                            subject: "Jenkins Pipeline: Security Scan - ${stageStatus}",
+                            body: "The Security Scan stage has completed with status: ${stageStatus}. Please find the logs attached.",
+                            attachLog: true
+                        )
+                    }
+                }
             }
         }
+
         stage('Deploy to Staging') {
             steps {
-                echo "Deploying application to Staging environment (e.g., AWS EC2)..."
-                // Example: sh 'deploy-to-staging.sh'
+                echo 'Stage 5: Deploy to Staging'
+                echo 'Task: Deploy the application to a staging server for further testing.'
+                echo 'Tool: AWS CLI'
             }
         }
+
         stage('Integration Tests on Staging') {
             steps {
-                echo "Running Integration Tests on Staging environment..."
-                // Example: sh 'run-integration-tests.sh'
+                echo 'Stage 6: Integration Tests on Staging'
+                echo 'Task: Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment.'
+                echo 'Tool: Postman for API testing, Selenium for UI testing'
             }
         }
+
         stage('Deploy to Production') {
             steps {
-                echo "Deploying application to Production environment (e.g., AWS EC2)..."
-                // Example: sh 'deploy-to-production.sh'
+                echo 'Stage 7: Deploy to Production'
+                echo 'Task: Deploy the application to the production environment.'
+                echo 'Tool: AWS CLI'
             }
         }
     }
 
     post {
-        always {
-            script {
-                def logContent = currentBuild.rawBuild.getLog(50).join('\n') // Get last 50 lines of the log
-                mail to: "biniltomjose12780@gmail.com",
-                     subject: "Build and Test Pipeline - Status",
-                     body: "The pipeline has completed.\n\nLogs:\n${logContent}"
-            }
-        }
         success {
-            echo "Pipeline completed successfully."
-        }
-        failure {
-            echo "Pipeline failed. Check logs for details."
+            mail to: 'biniltomjose12780@gmail.com',
+                 subject: "Jenkins Git Pipeline integration email",
+                 body: "Pipeline completed"
         }
     }
 }
