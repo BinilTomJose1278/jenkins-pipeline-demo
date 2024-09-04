@@ -4,62 +4,60 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the code using Maven...'
-                // Tool: Maven
+                echo "Building the code using Maven..."
+                // Example: sh 'mvn clean package'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests...'
-                // Tools: JUnit, Selenium
+                echo "Running Unit and Integration Tests using JUnit..."
+                // Example: sh 'mvn test'
             }
         }
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing code with SonarQube...'
-                // Tool: SonarQube
+                echo "Analyzing code quality using SonarQube..."
+                // Example: sh 'sonar-scanner'
             }
         }
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                // Tool: OWASP ZAP
+                echo "Performing security scan using OWASP Dependency-Check..."
+                // Example: sh 'dependency-check.sh --project myapp --scan .'
             }
         }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to staging server...'
-                // Tool: AWS CLI or Terraform
+                echo "Deploying application to Staging environment (e.g., AWS EC2)..."
+                // Example: sh 'deploy-to-staging.sh'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running tests on staging environment...'
-                // Tool: Postman
+                echo "Running Integration Tests on Staging environment..."
+                // Example: sh 'run-integration-tests.sh'
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production server...'
-                // Tool: AWS CLI or Terraform
+                echo "Deploying application to Production environment (e.g., AWS EC2)..."
+                // Example: sh 'deploy-to-production.sh'
             }
         }
     }
 
     post {
+        always {
+            mail to: "biniltomjose12780@gmail.com",
+                 subject: "Build and Test Pipeline - Status",
+                 body: "The pipeline has completed. Check the logs for details.",
+                 attachLog: true
+        }
         success {
-            echo 'Pipeline completed successfully!'
+            echo "Pipeline completed successfully."
         }
         failure {
-            echo 'Pipeline failed. Check logs.'
-        }
-        always {
-            emailext (
-                to: 'biniltomjose12780@gmail.com',
-                subject: "Build ${currentBuild.fullDisplayName}",
-                body: "Build ${currentBuild.fullDisplayName} completed with status: ${currentBuild.currentResult}",
-                attachmentsPattern: '**/build.log'
-            )
+            echo "Pipeline failed. Check logs for details."
         }
     }
 }
