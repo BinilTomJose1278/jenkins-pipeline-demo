@@ -24,6 +24,7 @@ pipeline {
                         subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
                         body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
                         attachLog: true
+                        debug: true
                     )
                 }
                 failure {
@@ -59,6 +60,7 @@ pipeline {
                         subject: "Jenkins Pipeline: Security Scan - SUCCESS",
                         body: "The Security Scan stage has completed successfully. Please find the logs attached.",
                         attachLog: true
+                        debug: true
                     )
                 }
                 failure {
