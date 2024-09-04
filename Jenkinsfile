@@ -18,6 +18,7 @@ pipeline {
             }
             post {
                 success {
+                    echo "Sending success email for Unit and Integration Tests..."
                     emailext(
                         to: 'biniltomjose12780@gmail.com',
                         subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
@@ -26,6 +27,7 @@ pipeline {
                     )
                 }
                 failure {
+                    echo "Sending failure email for Unit and Integration Tests..."
                     emailext(
                         to: 'biniltomjose12780@gmail.com',
                         subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
