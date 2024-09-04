@@ -97,16 +97,5 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            mail to: 'biniltomjose12780@gmail.com',
-                 subject: "Jenkins Pipeline completed successfully",
-                 body: "The entire pipeline has completed successfully."
-        }
-        failure {
-            mail to: 'biniltomjose12780@gmail.com',
-                 subject: "Jenkins Pipeline failed",
-                 body: "The pipeline has encountered a failure."
-        }
-    }
+    
 }
