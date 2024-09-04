@@ -17,16 +17,21 @@ pipeline {
                 echo 'Tools: JUnit for unit tests, Selenium for integration tests'
             }
             post {
-                always {
-                    script {
-                        def stageStatus = currentBuild.currentResult
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Unit and Integration Tests - ${stageStatus}",
-                            body: "The Unit and Integration Tests stage has completed with status: ${stageStatus}. Please find the logs attached.",
-                            attachLog: true
-                        )
-                    }
+                success {
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
+                        body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
+                        body: "The Unit and Integration Tests stage has failed. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -46,16 +51,21 @@ pipeline {
                 echo 'Tool: OWASP Dependency-Check'
             }
             post {
-                always {
-                    script {
-                        def stageStatus = currentBuild.currentResult
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Security Scan - ${stageStatus}",
-                            body: "The Security Scan stage has completed with status: ${stageStatus}. Please find the logs attached.",
-                            attachLog: true
-                        )
-                    }
+                success {
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Security Scan - SUCCESS",
+                        body: "The Security Scan stage has completed successfully. Please find the logs attached.",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                        to: 'biniltomjose12780@gmail.com',
+                        subject: "Jenkins Pipeline: Security Scan - FAILURE",
+                        body: "The Security Scan stage has failed. Please find the logs attached.",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -88,8 +98,13 @@ pipeline {
     post {
         success {
             mail to: 'biniltomjose12780@gmail.com',
-                 subject: "Jenkins Git Pipeline integration email",
-                 body: "Pipeline completed"
+                 subject: "Jenkins Pipeline completed successfully",
+                 body: "The entire pipeline has completed successfully."
+        }
+        failure {
+            mail to: 'biniltomjose12780@gmail.com',
+                 subject: "Jenkins Pipeline failed",
+                 body: "The pipeline has encountered a failure."
         }
     }
 }
