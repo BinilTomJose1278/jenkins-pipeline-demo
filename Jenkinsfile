@@ -18,35 +18,38 @@ pipeline {
             }
             post {
                 success {
-                    echo "Attempting to send success email for Unit and Integration Tests..."
-                    try {
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
-                            body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
-                            attachLog: true,
-                            debug: true
-                        )
-                        echo "Email sent successfully for Unit and Integration Tests"
-                    } catch (Exception e) {
-                        echo "Failed to send email for Unit and Integration Tests: ${e}"
+                    script {
+                        echo "Attempting to send success email for Unit and Integration Tests..."
+                        try {
+                            emailext(
+                                to: 'biniltomjose12780@gmail.com',
+                                subject: "Jenkins Pipeline: Unit and Integration Tests - SUCCESS",
+                                body: "The Unit and Integration Tests stage has completed successfully. Please find the logs attached.",
+                                attachLog: true,
+                                debug: true
+                            )
+                            echo "Email sent successfully for Unit and Integration Tests"
+                        } catch (Exception e) {
+                            echo "Failed to send email for Unit and Integration Tests: ${e}"
+                        }
                     }
-                    // Add a sleep to avoid email rate-limiting issues
-                    sleep time: 5, unit: 'SECONDS'
+                    sleep time: 5, unit: 'SECONDS'  // Add a 5-second delay between emails
                 }
                 failure {
-                    echo "Attempting to send failure email for Unit and Integration Tests..."
-                    try {
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
-                            body: "The Unit and Integration Tests stage has failed. Please find the logs attached.",
-                            attachLog: true,
-                            debug: true
-                        )
-                        echo "Failure email sent successfully for Unit and Integration Tests"
-                    } catch (Exception e) {
-                        echo "Failed to send failure email for Unit and Integration Tests: ${e}"
+                    script {
+                        echo "Attempting to send failure email for Unit and Integration Tests..."
+                        try {
+                            emailext(
+                                to: 'biniltomjose12780@gmail.com',
+                                subject: "Jenkins Pipeline: Unit and Integration Tests - FAILURE",
+                                body: "The Unit and Integration Tests stage has failed. Please find the logs attached.",
+                                attachLog: true,
+                                debug: true
+                            )
+                            echo "Failure email sent successfully for Unit and Integration Tests"
+                        } catch (Exception e) {
+                            echo "Failed to send failure email for Unit and Integration Tests: ${e}"
+                        }
                     }
                     sleep time: 5, unit: 'SECONDS'
                 }
@@ -69,34 +72,38 @@ pipeline {
             }
             post {
                 success {
-                    echo "Attempting to send success email for Security Scan..."
-                    try {
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Security Scan - SUCCESS",
-                            body: "The Security Scan stage has completed successfully. Please find the logs attached.",
-                            attachLog: true,
-                            debug: true
-                        )
-                        echo "Email sent successfully for Security Scan"
-                    } catch (Exception e) {
-                        echo "Failed to send email for Security Scan: ${e}"
+                    script {
+                        echo "Attempting to send success email for Security Scan..."
+                        try {
+                            emailext(
+                                to: 'biniltomjose12780@gmail.com',
+                                subject: "Jenkins Pipeline: Security Scan - SUCCESS",
+                                body: "The Security Scan stage has completed successfully. Please find the logs attached.",
+                                attachLog: true,
+                                debug: true
+                            )
+                            echo "Email sent successfully for Security Scan"
+                        } catch (Exception e) {
+                            echo "Failed to send email for Security Scan: ${e}"
+                        }
                     }
                     sleep time: 5, unit: 'SECONDS'
                 }
                 failure {
-                    echo "Attempting to send failure email for Security Scan..."
-                    try {
-                        emailext(
-                            to: 'biniltomjose12780@gmail.com',
-                            subject: "Jenkins Pipeline: Security Scan - FAILURE",
-                            body: "The Security Scan stage has failed. Please find the logs attached.",
-                            attachLog: true,
-                            debug: true
-                        )
-                        echo "Failure email sent successfully for Security Scan"
-                    } catch (Exception e) {
-                        echo "Failed to send failure email for Security Scan: ${e}"
+                    script {
+                        echo "Attempting to send failure email for Security Scan..."
+                        try {
+                            emailext(
+                                to: 'biniltomjose12780@gmail.com',
+                                subject: "Jenkins Pipeline: Security Scan - FAILURE",
+                                body: "The Security Scan stage has failed. Please find the logs attached.",
+                                attachLog: true,
+                                debug: true
+                            )
+                            echo "Failure email sent successfully for Security Scan"
+                        } catch (Exception e) {
+                            echo "Failed to send failure email for Security Scan: ${e}"
+                        }
                     }
                     sleep time: 5, unit: 'SECONDS'
                 }
